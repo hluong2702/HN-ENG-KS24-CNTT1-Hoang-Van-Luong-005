@@ -219,7 +219,6 @@ class LibraryManager {
                     this.calculateTotalRevenue();
                     break;
                 case "9":
-                    this.countBooksByType();
                     break;
                 case "10":
                     console.log("Tam biet");
@@ -388,24 +387,6 @@ class LibraryManager {
     calculateTotalRevenue(): void {
         const total = this.borrowingRepo.getAll().reduce((sum, borrowing) => sum + borrowing.getTotalCost(), 0);
         console.log(`Tong doanh thu: ${total}`);
-    }
-
-    countBooksByType(): void {
-        const books = this.booksRepo.getAll();
-        const typeCounts: { [key: string]: number } = {
-            "Tieu thuyet": 0,
-            "Khoa hoc": 0,
-            "Lich su": 0
-        };
-        books.forEach(book => {
-            if (book.getType() in typeCounts) {
-                typeCounts[book.getType()] += book.isBookAvailable() ? 1 : 0;
-            }
-        });
-        console.log("So luong sach theo the loai:");
-        for (const [type, count] of Object.entries(typeCounts)) {
-            console.log(`${type}: ${count}`);
-        }
     }
 }
 
